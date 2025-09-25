@@ -1,0 +1,22 @@
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp float intensity; // 0 to 1, can drive red tint
+const highp float TimeScale = 0.7;
+const highp float DistortionScale = 0.005;
+
+void fragment() {
+    highp float mod = mix(0.0, DistortionScale, intensity);
+    highp vec2 coord = FRAGCOORD.xy * SCREEN_PIXEL_SIZE.xy;
+    highp float time = TIME * TimeScale;
+
+    // subtle oscillating offset for distortion
+    highp vec2 offset = vec2(mod * sin(time * 1.5), mod * cos(time * 1.5));
+    highp vec4 tex = zTextureSpec(SCREEN_TEXTURE, coord + offset);
+
+    // pulsing red overlay
+    highp float pulse = 0.5 + 0.5 * sin(time * 2.0);
+    highp vec3 redTint = tex.rgb * vec3(1.0, 0.1, 0.1) + vec3(1.0, 0.3, 0.0) * pulse * intensity;
+
+    COLOR = vec4(redTint, tex.a);
+}
+
+

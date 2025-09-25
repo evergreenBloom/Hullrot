@@ -1,0 +1,14 @@
+- type: entity
+  id: ActionToggleSandevistan
+  name: Toggle Sandevistan
+  description: Enable or disable your improved reflexes provided by the Sandevistan.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    checkCanInteract: false
+    useDelay: 30
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_mecha.rsi
+      state: mech_cycle_equip_on
+    event: !type:ToggleSandevistanEvent
