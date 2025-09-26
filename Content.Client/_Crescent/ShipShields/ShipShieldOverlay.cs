@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client._Crescent.ShipShields;
 
-public sealed class ShipShieldOverlay : Overlay
+public sealed class ShipShieldOverlay : Robust.Client.Graphics.Overlay
 {
     private readonly IResourceCache _resourceCache;
     private readonly IEntityManager _entManager;

@@ -1,22 +1,43 @@
-using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Client.Graphics;
 
-namespace Content.Shared._Crescent.Overlays
+
+namespace Content.Shared._Crescent.Overlays;
+
+public sealed class DemonVisionSystem : EntitySystem
 {
-    [RegisterComponent, NetworkedComponent]
-    public sealed partial class DemonVisionComponent : Component
+    private class ColorTintOverlay : Overlay { }
+
+    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    private ColorTintOverlay? _overlay;
+
+    public override void Initialize()
     {
-        [DataField]
-        public string Shader = "DemonVision";
+        base.Initialize();
+
+        SubscribeLocalEvent<DemonVisionComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DemonVisionComponent, ComponentShutdown>(OnShutdown);
     }
 
-    [Serializable, NetSerializable]
-    public sealed class ToggleDemonVisionEvent : EntityEventArgs
+    private void OnStartup(Entity<DemonVisionComponent> ent, ref ComponentStartup args)
     {
-        public bool Enabled;
-        public ToggleDemonVisionEvent(bool enabled)
+        if (_overlay != null)
+            return;
+
+        _overlay = new ColorTintOverlay
         {
-            Enabled = enabled;
-        }
+            TintColor = new Robust.Shared.Maths.Vector3(1f, 0f, 0f), // red
+            TintAmount = 0.25f
+        };
+
+        _overlayMan.AddOverlay(_overlay);
+    }
+
+    private void OnShutdown(Entity<DemonVisionComponent> ent, ref ComponentShutdown args)
+    {
+        if (_overlay == null)
+            return;
+
+        _overlayMan.RemoveOverlay(_overlay);
+        _overlay = null;
     }
 }

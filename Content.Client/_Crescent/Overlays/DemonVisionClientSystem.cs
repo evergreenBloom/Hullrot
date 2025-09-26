@@ -1,39 +1,34 @@
+using Content.Shared._Crescent.Overlays;
 using Robust.Client.Graphics;
-using Content.Shared._Crescent.Cybernetics.Sandevistan;
 
+namespace Content.Client._Crescent.Overlays;
 
-namespace Content.Client._Crescent.Overlays
+public sealed class DemonVisionClientSystem : EntitySystem
 {
-    public sealed class DemonVisionClientSystem : EntitySystem
+    private DemonVisionOverlay? _overlay;
+
+    public override void Initialize()
     {
-        private DemonVisionScreenOverlay? _overlay;
+        base.Initialize();
+        SubscribeLocalEvent<DemonVisionComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DemonVisionComponent, ComponentShutdown>(OnShutdown);
+    }
 
-        public override void Initialize()
+    private void OnStartup(EntityUid uid, DemonVisionComponent comp, ComponentStartup args)
+    {
+        if (_overlay == null)
         {
-            base.Initialize();
-            SubscribeNetworkEvent<DemonVisionToggleEvent>(OnToggleVision);
+            _overlay = new DemonVisionOverlay();
+            IoCManager.Resolve<IOverlayManager>().AddOverlay(_overlay);
         }
+    }
 
-        private void OnToggleVision(DemonVisionToggleEvent args)
+    private void OnShutdown(EntityUid uid, DemonVisionComponent comp, ComponentShutdown args)
+    {
+        if (_overlay != null)
         {
-            var overlayMan = IoCManager.Resolve<IOverlayManager>();
-
-            if (args.Enabled)
-            {
-                if (_overlay == null)
-                {
-                    _overlay = new DemonVisionScreenOverlay("DemonVision");
-                    overlayMan.AddOverlay(_overlay);
-                }
-            }
-            else
-            {
-                if (_overlay != null)
-                {
-                    overlayMan.RemoveOverlay(_overlay);
-                    _overlay = null;
-                }
-            }
+            IoCManager.Resolve<IOverlayManager>().RemoveOverlay(_overlay);
+            _overlay = null;
         }
     }
 }

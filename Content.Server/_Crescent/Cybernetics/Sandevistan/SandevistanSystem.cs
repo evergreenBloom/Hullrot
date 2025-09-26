@@ -19,10 +19,9 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
-using Content.Shared.Traits.Assorted.Components;
-
 
 namespace Content.Server._Crescent.Cybernetics.Sandevistan;
+
 
 public sealed class SandevistanSystem : EntitySystem
 {
@@ -48,6 +47,7 @@ public sealed class SandevistanSystem : EntitySystem
         SubscribeLocalEvent<SandevistanUserComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<SandevistanUserComponent, ComponentShutdown>(OnShutdown);
     }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -55,39 +55,33 @@ public sealed class SandevistanSystem : EntitySystem
         var query = EntityQueryEnumerator<ActiveSandevistanUserComponent, SandevistanUserComponent>();
         while (query.MoveNext(out var uid, out _, out var comp))
         {
-            if (comp.DisableAt != null
-                && _timing.CurTime > comp.DisableAt)
+            if (comp.DisableAt != null && _timing.CurTime > comp.DisableAt)
                 Disable(uid, comp);
 
             if (comp.Trail != null)
             {
-                // Oscillate hue between ~0.0 (red) and ~0.08 (orange-red)
                 var hue = 0.04f + 0.04f * MathF.Sin(comp.ColorAccumulator * 0.05f);
-
-                // Full saturation, ~0.9 brightness for glow
                 comp.Trail.Color = Color.FromHsv(new Vector4(hue, 1f, 0.9f, 1f));
-
                 comp.ColorAccumulator++;
                 Dirty(uid, comp.Trail);
             }
-
 
             comp.CurrentLoad += comp.LoadPerActiveSecond * frameTime;
 
             var stateActions = new Dictionary<int, Action>
             {
-                { 1, () => _jittering.DoJitter(uid, comp.StatusEffectTime, true)},
-                { 2, () => _stamina.TakeStaminaDamage(uid, comp.StaminaDamage * frameTime)},
-                { 3, () => _damageable.TryChangeDamage(uid, comp.Damage * frameTime, ignoreResistances: true)},
-                { 4, () => _stun.TryKnockdown(uid, comp.StatusEffectTime, true)},
-                { 5, () => Disable(uid, comp)},
-                { 6, () => _mobState.ChangeMobState(uid, MobState.Dead)},
+                { 1, () => _jittering.DoJitter(uid, comp.StatusEffectTime, true) },
+                { 2, () => _stamina.TakeStaminaDamage(uid, comp.StaminaDamage * frameTime) },
+                { 3, () => _damageable.TryChangeDamage(uid, comp.Damage * frameTime, ignoreResistances: true) },
+                { 4, () => _stun.TryKnockdown(uid, comp.StatusEffectTime, true) },
+                { 5, () => Disable(uid, comp) },
+                { 6, () => _mobState.ChangeMobState(uid, MobState.Dead) },
             };
 
             var filteredStates = new List<int>();
             foreach (var stateThreshold in comp.Thresholds)
                 if (comp.CurrentLoad >= stateThreshold.Value)
-                    filteredStates.Add((int)stateThreshold.Key);
+                    filteredStates.Add((int) stateThreshold.Key);
 
             filteredStates.Sort((a, b) => b.CompareTo(a));
             foreach (var state in filteredStates)
@@ -99,7 +93,7 @@ public sealed class SandevistanSystem : EntitySystem
 
             var popup = -1;
             foreach (var state in filteredStates)
-                if (state > popup && state < 4) // Goida
+                if (state > popup && state < 4)
                     popup = state;
 
             if (popup == -1)
@@ -113,9 +107,7 @@ public sealed class SandevistanSystem : EntitySystem
     private void OnStartup(Entity<SandevistanUserComponent> ent, ref ComponentStartup args)
     {
         ent.Comp.ActionUid = _actions.AddAction(ent, ent.Comp.ActionProto);
-
     }
-
 
     private void OnToggle(Entity<SandevistanUserComponent> ent, ref ToggleSandevistanEvent args)
     {
@@ -123,42 +115,47 @@ public sealed class SandevistanSystem : EntitySystem
 
         if (ent.Comp.Active != null)
         {
-            // Deactivating Sandevistan
+            // Deactivating
             _audio.Stop(ent.Comp.RunningSound);
             _audio.PlayEntity(ent.Comp.EndSound, ent, ent);
             ent.Comp.DisableAt = _timing.CurTime + ent.Comp.ShiftDelay;
 
+            // Remove DemonVision overlay
+            RemComp<Content.Shared._Crescent.Overlays.DemonVisionComponent>(ent);
+            ent.Comp.Overlay = null;
+
             return;
         }
 
-        // Activating Sandevistan
+        // Activating
         ent.Comp.Active = EnsureComp<ActiveSandevistanUserComponent>(ent);
-        ent.Comp.CurrentLoad = MathF.Max(0, ent.Comp.CurrentLoad + ent.Comp.LoadPerInactiveSecond * (float)(_timing.CurTime - ent.Comp.LastEnabled).TotalSeconds);
+        ent.Comp.CurrentLoad = MathF.Max(
+            0,
+            ent.Comp.CurrentLoad +
+            ent.Comp.LoadPerInactiveSecond * (float) (_timing.CurTime - ent.Comp.LastEnabled).TotalSeconds);
         _speed.RefreshMovementSpeedModifiers(ent);
 
         if (!HasComp<TrailComponent>(ent))
         {
             var trail = AddComp<TrailComponent>(ent);
-            trail.RenderedEntity = ent;         // The entity that spawns the particles
-            trail.LerpTime = 0.1f;             // How smoothly lerps happen
-            trail.LerpDelay = TimeSpan.FromSeconds(4); // Delay before lerp starts
-            trail.Lifetime = 0.5f;             // Each particle lasts 0.5 seconds
-            trail.Frequency = 0.03f;           // How often particles spawn (smaller = more frequent)
-            trail.AlphaLerpAmount = 0.2f;      // Fade rate of each particle
-            trail.MaxParticleAmount = 1;       // Maximum active particles at a time
+            trail.RenderedEntity = ent;
+            trail.LerpTime = 0.1f;
+            trail.LerpDelay = TimeSpan.FromSeconds(4);
+            trail.Lifetime = 0.5f;
+            trail.Frequency = 0.03f;
+            trail.AlphaLerpAmount = 0.2f;
+            trail.MaxParticleAmount = 1;
             ent.Comp.Trail = trail;
         }
 
-        if (!HasComp<DogVisionComponent>(ent))
-            ent.Comp.Overlay = AddComp<DogVisionComponent>(ent);
+        // Add DemonVision overlay
+        if (!HasComp<Content.Shared._Crescent.Overlays.DemonVisionComponent>(ent))
+            ent.Comp.Overlay = AddComp<Content.Shared._Crescent.Overlays.DemonVisionComponent>(ent);
 
         var audio = _audio.PlayEntity(ent.Comp.StartSound, ent, ent);
-        if (!audio.HasValue)
-            return;
-
-        ent.Comp.RunningSound = audio.Value.Entity;
+        if (audio.HasValue)
+            ent.Comp.RunningSound = audio.Value.Entity;
     }
-
 
     private void OnRefreshSpeed(Entity<SandevistanUserComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
@@ -172,7 +169,7 @@ public sealed class SandevistanSystem : EntitySystem
             || !TryComp<MeleeWeaponComponent>(args.Weapon, out var weapon))
             return;
 
-        var rate = weapon.NextAttack - _timing.CurTime; //weapon.AttackRate; breaks things when multiple systems modify NextAttack
+        var rate = weapon.NextAttack - _timing.CurTime;
         weapon.NextAttack -= rate - rate / ent.Comp.AttackSpeedModifier;
     }
 
@@ -195,6 +192,7 @@ public sealed class SandevistanSystem : EntitySystem
         _audio.Stop(comp.RunningSound);
         _speed.RefreshMovementSpeedModifiers(uid);
 
+        // Remove overlay if active
         if (comp.Overlay != null)
         {
             RemComp(uid, comp.Overlay);

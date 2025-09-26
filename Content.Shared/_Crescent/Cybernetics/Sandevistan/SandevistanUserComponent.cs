@@ -1,11 +1,9 @@
 using Content.Shared.FixedPoint;
 using Content.Shared._Goobstation.Wizard.Projectiles;
-using Content.Shared.Abilities;
 using Content.Shared.Damage;
 using Robust.Shared.Audio;
-using Content.Shared.Traits.Assorted.Components;
 using Content.Server._Crescent.Cybernetics.Sandevistan;
-
+using Content.Shared._Crescent.Overlays;
 
 
 namespace Content.Shared._Crescent.Cybernetics.Sandevistan;
@@ -86,7 +84,7 @@ public sealed partial class SandevistanUserComponent : Component
     public EntityUid? RunningSound;
 
     [ViewVariables(VVAccess.ReadOnly)]
-    public DogVisionComponent? Overlay;
+    public DemonVisionComponent? Overlay;
 
     [ViewVariables(VVAccess.ReadOnly)]
     public TrailComponent? Trail;

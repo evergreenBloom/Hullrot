@@ -346,6 +346,6 @@
     sprite: _Crescent/Objects/Misc/cybernetics.rsi
     state: icon
   - type: Organ
-    slotId: dermis
+    slotId: dermis  # placeholder from testing, made it easier to test
     onAdd:
     - type: SandevistanUser

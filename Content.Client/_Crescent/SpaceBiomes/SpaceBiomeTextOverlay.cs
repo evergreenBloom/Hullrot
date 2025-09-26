@@ -9,7 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client._Crescent.SpaceBiomes;
 
-public sealed class SpaceBiomeTextOverlay : Overlay
+public sealed class SpaceBiomeTextOverlay : Robust.Client.Graphics.Overlay
 {
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private IGameTiming _timing = default!;
