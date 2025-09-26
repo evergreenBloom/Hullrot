@@ -8,7 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared._Goobstation.Sandevistan;
 
-[Serializable, NetSerializable]
+[Serializable, NetSerializable,]
 public enum SandevistanState : byte
 {
     Warning = 0,

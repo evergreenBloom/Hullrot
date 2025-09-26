@@ -8,7 +8,6 @@ using Content.Shared._Goobstation.Wizard.Projectiles;
 using Content.Shared.Abilities;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Systems;
 using Content.Shared.Jittering;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
@@ -20,7 +19,6 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
 using Content.Goobstation.Shared.Sandevistan;
-using Content.Shared.Traits.Assorted.Components;
 using ActiveSandevistanUserComponent = Content.Goobstation.Shared.Sandevistan.ActiveSandevistanUserComponent;
 using ToggleSandevistanEvent = Content.Shared._Goobstation.Sandevistan.ToggleSandevistanEvent;
 
@@ -102,7 +100,7 @@ public sealed class SandevistanSystem : EntitySystem
             if (popup == -1)
                 continue;
 
-            _popup.PopupEntity(Loc.GetString("sandevistan-overload-" + popup), uid, uid);
+            _popup.PopupEntity(Loc.GetString("You are burning up"), uid, uid);
             comp.NextPopupTime = _timing.CurTime + comp.PopupDelay;
         }
     }
