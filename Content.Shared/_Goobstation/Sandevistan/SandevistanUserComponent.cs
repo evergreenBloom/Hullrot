@@ -76,7 +76,7 @@ public sealed partial class SandevistanUserComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Heat", 4.5 },
+            { "Blunt", 6.5 },
         },
     };
 
