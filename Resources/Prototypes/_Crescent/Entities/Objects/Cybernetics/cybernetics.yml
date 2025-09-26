@@ -308,7 +308,7 @@
   - type: Sprite
     sprite: Mobs/Customization/cyberlimbs/bishop/bishop_main.rsi
     state: "iconpry"
-    
+
 - type: entity
   parent: HullrotCyberneticBase
   id: SkillshardSlot
@@ -334,3 +334,18 @@
       - !type:TraitAddComponent
         components:
           - type: SkillchipImplantHolder
+
+- type: entity
+  parent: HullrotCyberneticBase
+  id: Sandie Placeholder
+  name: Sandevistan Placeholder
+  description: Placeholder
+  components:
+  - type: Dermis
+  - type: Sprite
+    sprite: _Crescent/Objects/Misc/cybernetics.rsi
+    state: icon
+  - type: Organ
+    slotId: dermis  # placeholder from testing, made it easier to test
+    onAdd:
+    - type: SandevistanUser
