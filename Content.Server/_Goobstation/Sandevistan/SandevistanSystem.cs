@@ -19,10 +19,8 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Timing;
-using Content.Goobstation.Shared.Sandevistan;
-using Content.Shared.Traits.Assorted.Components;
-using ActiveSandevistanUserComponent = Content.Goobstation.Shared.Sandevistan.ActiveSandevistanUserComponent;
 using ToggleSandevistanEvent = Content.Shared._Goobstation.Sandevistan.ToggleSandevistanEvent;
+using Content.Shared._Goobstation.Sandevistan;
 
 
 
@@ -65,7 +63,12 @@ public sealed class SandevistanSystem : EntitySystem
 
             if (comp.Trail != null)
             {
-                comp.Trail.Color = Color.FromHsv(new Vector4(comp.ColorAccumulator % 100f / 100f, 1, 1, 1));
+                // Oscillate hue between ~0.0 (red) and ~0.08 (orange-red)
+                var hue = 0.04f + 0.04f * MathF.Sin(comp.ColorAccumulator * 0.05f);
+
+                // Full saturation, ~0.9 brightness for glow
+                comp.Trail.Color = Color.FromHsv(new Vector4(hue, 1f, 0.9f, 1f));
+
                 comp.ColorAccumulator++;
                 Dirty(uid, comp.Trail);
             }
@@ -102,7 +105,7 @@ public sealed class SandevistanSystem : EntitySystem
             if (popup == -1)
                 continue;
 
-            _popup.PopupEntity(Loc.GetString("sandevistan-overload-" + popup), uid, uid);
+            _popup.PopupEntity(Loc.GetString("You are burning up" + popup), uid, uid);
             comp.NextPopupTime = _timing.CurTime + comp.PopupDelay;
         }
     }
@@ -129,13 +132,13 @@ public sealed class SandevistanSystem : EntitySystem
         if (!HasComp<TrailComponent>(ent))
         {
             var trail = AddComp<TrailComponent>(ent);
-            trail.RenderedEntity = ent;
-            trail.LerpTime = 0.1f;
-            trail.LerpDelay = TimeSpan.FromSeconds(4);
-            trail.Lifetime = 10;
-            trail.Frequency = 0.07f;
-            trail.AlphaLerpAmount = 0.2f;
-            trail.MaxParticleAmount = 25;
+            trail.RenderedEntity = ent;         // The entity that spawns the particles
+            trail.LerpTime = 0.1f;             // How smoothly lerps happen
+            trail.LerpDelay = TimeSpan.FromSeconds(4); // Delay before lerp starts
+            trail.Lifetime = 0.5f;             // Each particle lasts 0.5 seconds
+            trail.Frequency = 0.03f;           // How often particles spawn (smaller = more frequent)
+            trail.AlphaLerpAmount = 0.2f;      // Fade rate of each particle
+            trail.MaxParticleAmount = 1;       // Maximum active particles at a time
             ent.Comp.Trail = trail;
         }
 

@@ -48,3 +48,17 @@
     event: !type:BluespaceShuntEvent
     checkCanAccess: false
     range: 0
+
+- type: entity
+  id: ActionToggleSandevistan
+  name: Toggle Sandevistan
+  description:
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: InstantAction
+    useDelay: 15
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Crescent/Objects/Weapons/Melee/mantis_blade.rsi
+      state: icon
+    event: !type:ToggleSandevistanEvent

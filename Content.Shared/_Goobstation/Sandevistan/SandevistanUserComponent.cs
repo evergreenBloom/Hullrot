@@ -13,7 +13,7 @@ using Content.Shared.FixedPoint;
 
 
 // Ideally speaking this should be on the heart itself... but this also works.
-namespace Content.Goobstation.Shared.Sandevistan;
+namespace Content.Shared._Goobstation.Sandevistan;
 
 [RegisterComponent]
 public sealed partial class SandevistanUserComponent : Component
@@ -62,8 +62,8 @@ public sealed partial class SandevistanUserComponent : Component
         { SandevistanState.Normal, 0 },
         { SandevistanState.Warning, 10 },
         { SandevistanState.Shaking, 20 },
-        { SandevistanState.Stamina, 30 },
-        { SandevistanState.Damage, 40 },
+        { SandevistanState.Damage, 30 },
+        { SandevistanState.Stamina, 40 },
         { SandevistanState.Knockdown, 50 },
         { SandevistanState.Disable, 60 },
     };
@@ -76,7 +76,7 @@ public sealed partial class SandevistanUserComponent : Component
     {
         DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Blunt", 6.5 },
+            { "Heat", 4.5 },
         },
     };
 
