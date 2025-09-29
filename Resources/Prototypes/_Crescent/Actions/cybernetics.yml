@@ -52,13 +52,14 @@
 - type: entity
   id: ActionToggleSandevistan
   name: Toggle Sandevistan
-  description:
+  description: Enable or disable your improved reflexes provided by the Sandevistan.
   categories: [ HideSpawnMenu ]
   components:
   - type: InstantAction
+    checkCanInteract: false
     useDelay: 15
-    itemIconStyle: NoItem
     icon:
       sprite: _Crescent/Objects/Weapons/Melee/mantis_blade.rsi
       state: icon
+    itemIconStyle: NoItem
     event: !type:ToggleSandevistanEvent
