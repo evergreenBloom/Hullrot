@@ -43,14 +43,12 @@ public sealed class SmartGunSystem : EntitySystem
     {
         if (!HasComp<SmartGunUserComponent>(args.User))
         {
-
             _popup.PopupEntity("UNAUTHORIZED WIELDER, RETURN PROPERTY TO LAWFUL OWNER", args.User, args.User);
             args.Cancel(); // cancels the shot
 
 
             args.Cancel(); // cancels the shot
             _popup.PopupEntity("UNAUTHORIZED WIELDER, RETURN PROPERTY TO LAWFUL OWNER", args.User, args.User);
-
 
         }
     }
