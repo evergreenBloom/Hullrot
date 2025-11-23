@@ -524,14 +524,14 @@
     ShipComponents: 5000
     ShipHull: 1500
 
-- type: latheRecipe
-  id: FujinLPC
-  result: ShipVoucherFujin
-  completetime: 1
-  materials:
-    StarshipEngineComponents: 5000
-    ShipComponents: 6000
-    ShipHull: 7000
+#- type: latheRecipe
+#  id: FujinLPC
+#  result: ShipVoucherFujin
+#  completetime: 1
+#  materials:
+#    StarshipEngineComponents: 5000
+#    ShipComponents: 6000
+#    ShipHull: 7000
 
 - type: latheRecipe
   id: VariableCommodityFabricatorFlatpack
