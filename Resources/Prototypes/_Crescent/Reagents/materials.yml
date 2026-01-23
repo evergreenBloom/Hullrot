@@ -1,0 +1,7 @@
+- type: material
+  id: HullrotCharcoal
+  name: materials-charcoal
+  unit: materials-unit-piece
+  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  color: "#A9A9A9"
+  price: 0

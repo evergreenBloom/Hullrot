@@ -24,3 +24,10 @@
     Copper: 250
     Plastic: 500
     Glass: 500
+
+- type: latheRecipe
+  id: GunpowderCraft
+  result: HullrotGunpowder
+  completetime: 3
+  materials:
+    HullrotCharcoal: 100

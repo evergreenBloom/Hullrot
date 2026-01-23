@@ -14,3 +14,8 @@
   id: C_OrganPrinterStatic
   recipes:
     - OrganCrate
+
+- type: latheRecipePack
+  id: C_EnergeticsMillStatic
+  recipes:
+    - GunpowderCraft

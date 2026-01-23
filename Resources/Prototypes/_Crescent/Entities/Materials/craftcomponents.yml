@@ -587,3 +587,58 @@
   components:
     - type: Stack
       count: 5
+
+- type: entity
+  parent: MaterialBase
+  id: HullrotGunpowder
+  name: gunpowder
+  description: A stabilized energetic compound used as propellant in low-yield weapon systems.
+  components:
+  - type: Stack
+    stackType: Gunpowder
+    count: 1
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Gunpowder: 100
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - Energetics
+
+- type: entity
+  parent: MaterialBase
+  id: HullrotCharcoal
+  name: charcoal
+  description: A stabilized energetic compound used as propellant in low-yield weapon systems.
+  components:
+  - type: Stack
+    stackType: HullrotCharcoal
+    count: 1
+  - type: Sprite
+    sprite: Objects/Misc/reagent_fillings.rsi
+    state: powderpile
+    color: darkgray
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      HullrotCharcoal: 100
+  - type: Item
+    size: Tiny
+  - type: Tag
+    tags:
+    - RawMaterial
+
+
+- type: entity
+  id: HullrotCharcoal1
+  parent: HullrotCharcoal
+  suffix: Single
+  components:
+    - type: Stack
+      count: 1

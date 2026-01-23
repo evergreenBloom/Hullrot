@@ -482,3 +482,34 @@
   - type: Anchorable
     flags:
     - Anchorable
+
+# industry!!!!
+
+- type: entity
+  parent: BaseLathe
+  id: EnergeticsMill
+  name: Powder ball mill
+  description: A heavy rotating drum used to grind and incorporate energetic materials into usable propellant.
+  components:
+  - type: Sprite
+    sprite: _Crescent/Structures/purifier.rsi
+    layers:
+    - state: base_machine
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: buttons_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Machine
+    board: SheetifierMachineCircuitboard
+  - type: MaterialStorage
+    dropOnDeconstruct: false
+    ignoreColor: true
+    canEjectStoredMaterials: true
+    whitelist:
+      tags:
+      - RawMaterial
+  - type: Lathe
+    idleState: base_machine
+    runningState: base_machine_processing
+    staticPacks:
+    - C_EnergeticsMillStatic

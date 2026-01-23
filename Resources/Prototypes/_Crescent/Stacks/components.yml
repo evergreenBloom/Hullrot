@@ -113,3 +113,10 @@
   icon: { sprite: _Crescent/Objects/Materials/materials.rsi, state: plastitaniumfibrealloy }
   spawn: PlastitaniumFibreAlloy
   maxCount: 5
+
+- type: stack
+  id: HullrotCharcoal
+  name: charcoal
+  icon: { sprite: Objects/Misc/reagent_fillings.rsi, state: powderpile }
+  spawn: HullrotCharcoal1
+  maxCount: 50

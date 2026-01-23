@@ -1,0 +1,15 @@
+- type: factoryRecipe
+  id: CharcoalFromWood
+  name: Wood to Charcoal
+  inputs:
+    Sugarcane: 1
+  outputs:
+    HullrotCharcoal: 1
+
+- type: factoryRecipe
+  id: FurnaceGold
+  name: Gold
+  inputs:
+    GoldOre: 1
+  outputs:
+    IngotGold: 1

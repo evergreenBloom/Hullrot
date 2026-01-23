@@ -117,7 +117,8 @@
       params:
         variation: 0.125
     recipes:
-      - FourFamiliesPlasteel
+      - CharcoalFromWood
+      - FurnaceGold
 
 - type: entity
   parent: BaseMachinePowered

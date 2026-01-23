@@ -39,3 +39,6 @@ materials-plastitaniumfibrealloy = plastitanium fibre alloy
 
 materials-unit-canister = units
 materials-unit-liter = liters
+
+# material
+materials-charcoal = charcoal
