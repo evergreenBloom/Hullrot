@@ -2,7 +2,7 @@
   id: FelinidAlternativeTail
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid, Human, Tajaran] # Einstein Engines - Tajaran
+  speciesRestriction: [Felinid, Human ] # Einstein Engines - Tajaran
   sprites:
     - sprite: DeltaV/Mobs/Customization/Felinid/alternative_tail.rsi
       state: m_waggingtail_cat_FRONT
@@ -11,7 +11,7 @@
   id: FelinidTiger
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid, Human, Tajaran] # Einstein Engines - Tajaran
+  speciesRestriction: [Felinid, Human ] # Einstein Engines - Tajaran
   sprites:
     - sprite: DeltaV/Mobs/Customization/Felinid/tiger_tail.rsi
       state: m_tail_tiger_primary

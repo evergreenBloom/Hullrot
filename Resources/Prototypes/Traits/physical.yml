@@ -242,7 +242,6 @@
       inverted: true
       species:
         - Felinid
-        - Tajaran
     - !type:CharacterTraitRequirement
       inverted: true
       traits:
@@ -266,7 +265,6 @@
       inverted: true
       species:
         - Felinid
-        - Tajaran
     - !type:CharacterTraitRequirement
       inverted: true
       traits:
@@ -318,7 +316,6 @@
       inverted: true
       species:
         - Felinid # Felinids/Tajaran already have this feature by default.
-        - Tajaran
     - !type:CharacterHeightRequirement
       max: 150
     - !type:CharacterWidthRequirement

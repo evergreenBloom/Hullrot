@@ -83,7 +83,7 @@
   id: FelinidEarsWide
   bodyPart: HeadTop
   markingCategory: HeadTop
-  speciesRestriction: [Felinid, Human, Tajaran] # Einstein Engines - Humans get felinid markings, Tajaran directly use felinid tails
+  speciesRestriction: [Felinid, Human] # Einstein Engines - Humans get felinid markings
   sprites:
   - sprite: Nyanotrasen/Mobs/Customization/felinid_ears.rsi
     state: wide_outer
@@ -96,7 +96,7 @@
   id: FelinidTailBasic
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Felinid, Tajaran] # Einstein Engines - Humans get felinid markings
+  speciesRestriction: [Felinid] # Einstein Engines - Humans get felinid markings
   sprites:
   - sprite: Nyanotrasen/Mobs/Customization/felinid_tails.rsi
     state: basic_tail_tip

@@ -17,7 +17,6 @@
         - ChiefMedicalOfficer
         - Brigmedic
         - SeniorPhysician
-        - BlueshieldOfficer
 
 - type: trait
   id: SelfAware
@@ -169,7 +168,6 @@
       inverted: true
       species:
         - Felinid
-        - Tajaran
 
 - type: trait
   id: Singer
